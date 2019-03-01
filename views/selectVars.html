@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plataforma de Consultas de dados censitários</title>
+    <!--<script src="http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.2/angular.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular-ui-router/1.0.0-rc.1/angular-ui-router.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--Font-awesome -->
+    <!--<script src="https://use.fontawesome.com/a3662961ef.js"></script>-->
+    <link rel="stylesheet" href="stylesheets/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <!-- datatables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.3/css/select.bootstrap.min.css">
+    <!-- Bootstrap select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+    <!-- CensoApp css, js-->
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <script src="javascripts/layout.js" type="text/javascript"></script>
+    <!-- <script src="javascripts/censoApp.js" type="text/javascript"></script> -->
+    <script src="javascripts/selectVars.js" type="text/javascript"></script>
+    <script src="javascripts/controlsIndex.js" type="text/javascript"></script>
+    <!-- Bootbox, para mensagens em Modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109958923-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-109958923-1');
+    </script>
+    <script type="text/javascript">
+        $(window).on('load',function(){
+            if(performance.navigation.type == 2) {
+                console.log ("--------RELOAD------------!!!!!!")
+                location.reload(true);
+            }
+        });
+
+    </script>
+</head>
+
+<!-- ******************************** -->
+<!-- ng-controller = submitController -->
+<!-- ******************************** -->
+<body  ng-app="selectVars" ng-controller="submitController">
+    <header>
+        <!-- Image and text -->
+        <nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark-green">
+            <!-- Section: toogler -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- End Section: toogler -->
+            <!-- Section: logo -->
+            <a class="navbar-brand" target="_blank" href="http://web.fflch.usp.br/centrodametropole/">
+                <img src="images/logo_cem-hdx121.png" height="70" class="d-inline-block align-top" alt="">
+                <label id="brand-title-vertical">DataCEM<br>
+                    <p id="brand-subtitle-vertical"> Plataforma de Extração de Microdados <br>dos Censos Demográficos (1960-2010)</p>
+                </label>
+            <!--<label id="brand-title-horizontal">DataCEM<br>
+                <p id="brand-subtitle-horizontal"> Plataforma de Extração de Microdados dos Censos Demográficos (1960-2010)</p>
+            </label>-->
+        </a>
+        <!-- End Section:logo -->
+        <!-- Section: icons -->
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <!-- Left menu -->
+            <!--<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Extrair dados<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Links importantes</a>
+                </li>
+            </ul>-->
+            <!-- Right menu -->
+            <ul class="navbar-nav ml-auto">
+                <li class="dropdown nav-item">
+                    <a href="javascript:;" class="nav-link"  data-toggle="modal" data-target="#pageloadModal">
+                        <i class="fa fa-2x fa-question-circle"></i> Como usar?
+                    </a>
+                </li>
+                <li class="dropdown nav-item">
+                    <a href="http://200.144.244.241/foruns/index.php/wiki" class="nav-link"  target="_blank" title="Wikipedia sobre o Censo">
+                        <i class="fa fa-2x fa-wikipedia-w" style="margin-right: -6px;"></i> ikiDados: Censos Demográficos
+                    </a>
+                </li>
+
+                <li class="dropdown nav-item">
+                    <a href="http://200.144.244.241/foruns/" class="nav-link"  target="_blank" title="Forum de discussões sobre a plataforma de extração de dados censitários">
+                        <i class="fa fa-2x fa-comments"></i> Sugestões e Dúvidas
+                    </a>
+                </li>
+                <li class="dropdown nav-item">
+                    <a href="javascript:;" class="nav-link"  data-toggle="modal" data-target="#aboutProjectModal">
+                        <i class="fa fa-2x fa-info-circle"></i> Sobre o projeto
+                    </a>
+                </li>
+                <!--<li class="dropdown nav-item">
+                    <a href="javascript:;" class="nav-link dropdown-toggle" id="notificationsDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-2x fa-bell"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="notificationsDropDown">
+                        <li class="dropdown-item">
+                            <span class="label label-default">Você tem ... notificações.</span>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="javascript:;"><i class="fa fa-file-archive-o"></i> O arquivo solicitado foi gerado</a>
+                        </li>
+                        <div class="dropdown-divider"></div>
+                        <li class="dropdown-item">
+                            <a href="javascript:;"> Todas as notificações</a>
+                        </li>
+                    </ul>
+                </li>-->
+                <!--<li class="dropdown nav-item">
+                    <a href="javascript:;" class="nav-link dropdown-toggle" id="userDropDown"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-2x fa-user"></i> Usuário
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropDown">
+                        <li class="dropdown-item">
+                            <a href="javascript:;"><i class="fa fa-fw fa-user"></i> Perfil</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="javascript:;"><i class="fa fa-fw fa-envelope"></i> Caixa de entrada</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="javascript:;"><i class="fa fa-fw fa-gear"></i> Configuraçãoes</a>
+                        </li>
+                        <div class="dropdown-divider"></div>
+                        <li class="dropdown-item">
+                            <a href="javascript:;"><i class="fa fa-fw fa-power-off"></i> Sair</a>
+                        </li>
+                    </ul>
+                </li>-->
+
+                <!--<li class="dropdown nav-item">
+                    <a href="javascript:;" class="nav-link dropdown-toggle" id="languagesDropDown"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-2x fa-language"></i> Idiomas
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="languagesDropDown">
+                        <li class="dropdown-item">
+                            <a href="javascript:;"> Português</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="javascript:;"> English</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="javascript:;"> Spanish</a>
+                        </li>
+                    </ul>
+                </li>-->
+
+            </ul>
+        </div>
+        <!-- End Section: icons-->
+    </nav>
+</header>
+<main role="main" class="container-fluid" id="main-container">
+    <!-- Row 00 -->
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body" style="padding-bottom:1px">
+                    <!-- ROW: TABELAS-->
+                    <div style="text-align:center">
+                        <h4 class="text-dark-green"><b>PASSO 3.</b> SELECIONAR VARIÁVEIS</h4>
+
+                        <div style="float:left;padding-right: 30px">
+                            <button id="btnConfSolic" class="form-group btn bg-dark-green" style="margin-left:0px;width:60px;float:left;padding:0 0 0 0;" type="submit" ng-click="changeCensosBackButtom()" title="Clique para alterar tipo de dados ou censos">
+                                <i class="fa fa-arrow-circle-left" style="text-align:center;padding:0px;"></i>
+                                <!-- <div style="font-size:12px">&nbsp;&nbsp;Alterar Censos ou <br> Tipo de dados</div> -->
+                            </button>
+                            &nbsp;&nbsp;Alterar Censos ou<br> Tipo de dados&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <!-- <div style="text-align:left;padding:5px">&nbsp;&nbsp;Alterar Censos ou Tipo de dados</div> -->
+                        </div>
+
+                        <!-- style="text-align:center;" -->
+                        <h6 class="text-dark-green"">
+                            <div ng-if="parameters.tabela=='tPes'" style="float:left"><b>Tipo de dados:</b> PESSOA</div>
+                            <div ng-if="parameters.tabela=='tDom'" style="float:left"><b>Tipo de dados:</b> DOMICILIO</div>
+                            <!--
+                        </h6>
+                        <h6 class="text-dark-green" style="text-align:left; ">
+                        -->
+                            <div style="float:left; padding-left:20px"><b>Censos:</b></div>
+                            <div ng-repeat="anoCenso in parameters.anoPad" style="float:left">
+                                &nbsp;{{anoCenso}}
+                            </div>
+                        </h6>
+                        <br><br>
+
+                    </div>
+                </div> <!-- class="card-body" -->
+            </div> <!-- class="body" -->
+        </div> <!-- class="col-lg-12" -->
+    </div> <!-- Row 00 -->
+
+    <!-- Row 01 -->
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="card">
+                <div class="card-header card-header-title">
+                    <i class="fa fa-database fa-fw"></i> <b>PASSO 3.1</b> SELEÇÃO DE VARIÁVEIS HARMONIZADAS OU ORIGINAIS
+                </div>
+
+                <!-- ----------- -->
+                <!-- INÍCIO TABS -->
+                <!-- ----------- -->
+                <div class="card-body">
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" id="variablesTab" role="tablist">
+                        <li class="nav-item">
+                            <!-- <a class="nav-link"  href="#padVarTab" id="padVar-tab" aria-controls="padVarTab" -->
+                            <a ng-class="{'nav-link':true, 'active':!parameters.abaOriginais}"  href="#padVarTab" id="padVar-tab" aria-controls="padVarTab"
+                            role="tab" data-toggle="tab" aria-selected="true" title="Seleção de variáveis harmonizadas" ng-click="changeVarTab()"><b>VARIÁVEIS HARMONIZADAS</b></a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- <a class="nav-link active" href="#origVarTab" id="origVar-tab" aria-controls="origVarTab" -->
+                            <a ng-class="{'nav-link':true, 'active':parameters.abaOriginais}" href="#origVarTab" id="origVar-tab" aria-controls="origVarTab"
+                            role="tab" data-toggle="tab" aria-selected="false" title="Seleção de variáveis originais" ng-click="changeVarTab()"><b>VARIÁVEIS ORIGINAIS</b></a>
+                        </li>
+                    </ul> <!-- Nav tabs -->
+
+                    <!-- Tab panels -->
+                    <div class="tab-content" id="variablesInfoTabContent">
+
+
+                        <!-- INÍCIO TAB VARIÁVEIS HARMONIZADAS -->
+                        <div role="tabpanel" ng-class="{'tab-pane':true, 'fade':true, 'show':!parameters.abaOriginais, 'active':!parameters.abaOriginais}" id="padVarTab" aria-labelledby="padVar-tab" style="margin-left:10px;height:450px;overflow-y:auto">
+                            <br>
+                            <!-- *********************************** -->
+                            <!-- ng-controller = themePadController  -->
+                            <!-- *********************************** -->
+                            <div class="form-group" ng-controller="themePadController">
+                                <label for="themePad" style="font-weight: 600;">3.2. SELECIONAR UM TEMA DE VARIÁVEIS HARMONIZADAS:</label><br>
+                                <select id="themePad" name="themePad" class="form-control col" onchange="changeTheme()" ng-model="parameters.themePad" ng-change="changeThemePad()">
+                                    <option value="">Selecione um tema</option>
+                                    <option value="{{item}}" ng-repeat="item in data.themesPad">{{item.label}}</option>
+                                </select>
+                            </div>
+
+                            <div class="tab-content" id="variablesTabContent">
+                                <div id="censo2010" class="tab-pane show active" role="tabpanel" aria-labelledby="censo2010-tab">
+                                    <!-- ************************************** -->
+                                    <!-- ng-controller = variaveisPadController -->
+                                    <!-- ************************************** -->
+                                    <div class="form-group" ng-controller="variaveisPadController">
+                                        <br>
+                                        <label for="variavelPad" style="font-weight: 600;">3.3 VARIÁVEIS HARMONIZADAS DE TEMA{{temaEscolhido}}:</label>
+                                        <br>
+                                            <table class="table table-condensed" size="10px" style="height:0px;margin-bottom:0px" ng-model="parameters.variaveisPad">
+                                                <tr>
+                                                    <th style="vertical-align:middle;width:10px;padding:2px 10px 2px 2px">Selecionar</th>
+                                                    <th>Código</th>
+                                                    <th></th>
+                                                    <th>Descrição</th>
+                                                    <div ng-repeat="item2 in data[0].variaveisPad.collection.variable.year">
+                                                        <!-- <th style="vertical-align:middle;width:5px;padding:2px 10px 2px 2px" ng-repeat="item2 in parameters.anoPad">{{item2}}</th> -->
+                                                        <th style="vertical-align:middle;width:5px;padding:2px 10px 2px 2px" ng-repeat="item2 in parameters.anoPad">{{item2}}</th>
+                                                    </div>
+                                                    <th style="vertical-align:middle;width:2px;padding:0px 10px 0px 0px"></th>
+                                                </tr>
+                                            </table>
+
+                                        <div id="tableVarPadHolder" style="height:265px;overflow:auto">
+
+                                            <table id = "variavelPad" name="variaveisPad[]"  class="table table-hover table-condensed" size="10px" style="height:0px;" ng-model="parameters.variaveisPad">
+                                                <tr ng-repeat="item in data.variaveisPad" class="{{item.collection.variable.disabled}}">
+                                                    <td style="vertical-align:middle;text-align:center;width:10px">
+                                                        <input type="checkbox" id="selectBox"  ng-model=item.collection.variable.checked ng-change="submitSelectFromTable(item.collection.variable)">
+                                                    </td>
+                                                    <td style="vertical-align:middle;width:30px;">{{item.collection.variable.varCode}}</td>
+                                                    <td style="vertical-align:middle;width:5px;">
+                                                        <a href="" data-toggle="modal" data-target="#myModal"><i title="Informações da variável" style="font-size: 1.3em;" class="fa fa-info-circle text-info" ng-click="InfoVar(item.collection.variable)"></i>
+                                                        </a>
+                                                    </td> <!-- InfoVar(item) -->
+                                                    <td style="vertical-align:middle;">{{item.collection.variable.description}}</td>
+                                                    <td style="vertical-align:middle;text-align:center;width:5px;padding:2px 10px 2px 2px" ng-repeat="censoYear in parameters.anoPad">
+                                                        <div ng-if="item.collection.variable.year.indexOf (censoYear) == -1">&nbsp;-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                                                        <div ng-if="item.collection.variable.year.indexOf (censoYear) > -1"><i class="fa fa-check">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</i></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div> <!-- <div id="tableSelectedHolder"> -->
+
+                                    </div> <!-- div class="form-group" ng-controller="variaveisPadController" -->
+                                </div> <!-- div id="censo2010" class="tab-pane show active" -->
+
+                            </div> <!-- div class="tab-content" id="variablesTabContent" -->
+
+                        </div>
+                        <!-- FIM TAB VARIÁVEIS HARMONIZADAS -->
+
+                        <!-- ******************************** -->
+                        <!-- INÍCIO TAB VARIÁVEIS ORIGINAIS -->
+                        <!-- ******************************** -->
+                        <div role="tabpanel" ng-class="{'tab-pane':true, 'fade':true, 'show':parameters.abaOriginais, 'active':parameters.abaOriginais}" id="origVarTab" aria-labelledby="origVar-tab" style="margin-left:10px;height:450px;overflow-y:auto">
+                            <br>
+
+                            <!-- ******************************** -->
+                            <!-- ng-controller = themController  -->
+                            <!-- ******************************** -->
+                            <div class="form-group" ng-controller="themeController">
+                                <label for="theme" style="font-weight: 600;">3.2. SELECIONAR UM TEMA DE VARIÁVEIS ORIGINAIS:</label><br>
+                                <select id="theme" name="theme" class="form-control col" onchange="changeTheme()" ng-model="parameters.theme" ng-change="changeTheme()">
+                                    <!-- <option value="">Selecione um ano</option> -->
+                                    <option value="">Selecione um tema</option>
+                                    <option value="{{item}}" ng-repeat="item in data.themes">{{item.label}}</option>
+                                </select>
+                            </div>
+
+                            <label style="font-weight: 600;">3.3. CENSOS: (Variáveis agrupadas por ano do Censo)</label>
+                            <small class='form-text text-muted'>Escolha o ano do Censo do qual você deseja selecionar variáveis.</small>
+
+
+                            <!-- ******************************** -->
+                            <!-- ng-controller = yearsController  -->
+                            <!-- ******************************** -->
+                            <div class="form-group" ng-controller="yearsController" style="margin: 15px 0px 0px 10px">
+                                <ul class="nav nav-pills nav-fill" style="font-weight:600; font-size:1.3em;">
+                                    <!-- data-toggle="tab"  -->
+                                    <li class="nav-item" ng-repeat="censoYear in parameters.anoPad" ng-model="parameters.ano" ng-click="changeCenso(censoYear)">
+                                        <a ng-class="{'nav-link':true, 'active':parameters.ano==censoYear}"  id="censo2010-tab" data-toggle="tab" style="max-width:100px"
+                                        value="{{censoYear}}" href="#censo{{censoYear}}">{{censoYear}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="tab-content" id="variablesTabContent" style:"margin-top:0px">
+                                <div id="censo2010" class="tab-pane show active" role="tabpanel" aria-labelledby="censo2010-tab">
+                                    <!-- *********************************** -->
+                                    <!-- ng-controller = variaveisController -->
+                                    <!-- *********************************** -->
+                                    <div class="form-group" ng-controller="variaveisController">
+                                        <br>
+                                        <label for="variavel" style="font-weight: 600;">2.3. VARIÁVEIS DE TEMA{{temaEscolhido}}:</label>
+                                        <br>
+
+                                        <div id="tableVarHolder" style="height:220px;overflow:auto">
+                                            <table id = "variavel" name="variaveis[]"  class="table table-hover table-condensed" size="10px" style="height:0px;" ng-model="parameters.variaveis">
+                                                <tr>
+                                                    <th style="vertical-align:middle;width:10px">Selecionar</th>
+                                                    <th style="vertical-align:middle;width:10px">Ano</th>
+                                                    <th>Código</th>
+                                                    <th></th>
+                                                    <th>Descrição</th>
+                                                </tr>
+                                                <tr ng-repeat="item in data.variaveis" class="{{item.collection.variable.disabled}}">
+                                                    <td style="vertical-align:middle;text-align:center">
+                                                        <input type="checkbox" id="selectBox"  ng-model=item.collection.variable.checked ng-change="submitSelectFromTable(item.collection.variable)">
+                                                    </td>
+                                                    <td style="vertical-align:middle;text-align:center">{{item.collection.variable.yearToShow}}</td>
+                                                    <td style="vertical-align:middle;width:30px;">{{item.collection.variable.varCode}}</td>
+                                                    <td style="vertical-align:middle;width:5px;">
+                                                        <a href="" data-toggle="modal" data-target="#myModal"><i title="Informações da variável" style="font-size: 1.3em;" class="fa fa-info-circle text-info" ng-click="InfoVar(item.collection.variable)"></i>
+                                                        </a>
+                                                    </td> <!-- InfoVar(item) -->
+                                                    <td style="vertical-align:middle;">{{item.collection.variable.label}}</td>
+                                                </tr>
+                                            </table>
+                                        </div> <!-- <div id="tableSelectedHolder"> -->
+
+                                    </div> <!-- div class="form-group" ng-controller="variaveisController" -->
+                                </div> <!-- div id="censo2010" class="tab-pane show active" -->
+                            </div> <!-- div class="tab-content" id="variablesTabContent" -->
+
+                        </div> <!-- role="tabpanel" -->
+                        <!-- Fim tab Variáveis oariginais -->
+                    </div>
+                    <!-- Fim Tab Panels -->
+
+                </div> <!-- div class="card-body" -->
+                <!-- FIM TABS -->
+
+            </div> <!-- class="card" SELEÇÃO DE VARIÁVEIS -->
+
+            <!--
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" title="Selecionar variáveis de tema" onclick="varSelect()" ng-click="submitSelect()" style="height:40px">
+                <b>&nbsp;>&nbsp;</b>
+            </button> -->
+
+        </div> <!-- class="col-lg-7" -->
+
+        <!-- Painel da direita -->
+        <div class="col-lg-5">
+            <div class="card">
+                <div class="card-header card-header-title">
+                    <i class="fa fa-shopping-cart fa-fw"></i> CARRINHO DE VARIÁVEIS SELECIONADAS
+                </div>
+                <div class="card-body" style="padding:10px">
+                    <div class="form-group" style="height:490px;overflow:auto">
+
+                        <table id = "tabSelectedVariables" name="selectedVariables[]"  class="table table-striped table-condensed" size="10px" style="height:0px;" ng-model="parameters.selectedVariables">
+                            <tr>
+                                <th style="vertical-align:middle;width:10px">Ano</th>
+                                <th>Código</th>
+                                <th></th>
+                                <th>Descrição</th>
+                                <th></th>
+                                <th>Excluir</th>
+                            </tr>
+                            <tr ng-repeat="item in parameters.selectedVariables">
+                                <td style="vertical-align:middle;text-align:center">{{item.yearToShow}}</td>
+                                <td style="vertical-align:middle;width:30px;" ng-click="loadCategories(item, $index)">{{item.varCode}}</td>
+                                <td style="vertical-align:middle;width:5px;">
+                                    <a href="" data-toggle="modal" data-target="#myModal"><i title="Informações da variável" style="font-size: 1.3em;" class="fa fa-info-circle text-info" ng-click="InfoVar(item)"></i>
+                                    </a>
+                                </td> <!-- InfoVar(item) -->
+                                <td style="vertical-align:middle;">{{item.label}}</td>
+                                <td style="vertical-align:middle;width:5px;">
+                                    <!-- InfoVar(item) -->
+                                    <a ng-if="item.varCode != 'CEM_HARM_ANO'" href="" data-toggle="modal" data-target="#modalFilter"><i title="Filtro de variável" style="font-size: 1.3em;" class="fa fa-filter text-info" ng-click="loadCategories(item, $index)"></i>
+                                    </a>
+                                </td> <!-- InfoVar(item) -->
+                                <td style="vertical-align:middle;width:30px;text-align:center" ng-click="RemoveVar(item,$index)">
+                                    <a href="">
+                                        <i title="Clique para excluir a variável {{item.varCode}} da lista de variáveis selecionadas" style="font-size: 1.3em;" class="fa fa-times text-danger"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div> <!-- class="card -->
+            <br><br>
+        </div> <!-- class="col-lg-5" -->
+
+    </div> <!-- Row 01 -->
+
+    <!-- </div> -->
+    <!-- End Row -->
+
+            <div ng-controller="tablesController">
+    <!-- Row 02 -->
+    <div class="row">
+       <!-- <div class="col-lg-12"> -->
+
+
+        <div class="col-lg-7" style="text-align:right;">
+                <button id="btnClearAllFields" class="form-group btn btn-secondary" style="height: 60px; width:300px" type="submit" ng-click="submitLimpa()">
+                    <i class="fa fa-refresh"></i> Limpar todos os campos
+                </button>
+        </div>
+        <div class="col-lg-5" style="text-align:left;">
+                <button id="btnConfSolic" class="form-group btn bg-dark-green" style="height: 60px; width:300px" type="submit" ng-click="submitQuery()" onclick="EnableGera()" title="Clickando nessa opção o sistema gerará uma pré-visualização dos dados que você está extraindo">
+                    <i class="fa fa-table"></i><b> Passo 3.</b> Visualizar e gerar arquivo
+                </button>
+
+                <input id="btnGeraArq" class="form-group btn btn-primary" style="display:none" type="submit" value="Gerar arquivo" ng-click="submitGeraArquivo()" disabled=""  onclick="disableGera()">
+                <!--</input> -->
+        </div>
+            </div>
+            <!--
+            <input id="btnGeraArq2" class="form-group btn btn-primary" style="margin-left:10px;width:120px" type="submit" value="Gerar arq." ng-click="submitGeraArquivo2()"> -->
+        <!-- </div> <!-- class="pull-right col-lg-12" -->
+    <!-- End Row -->
+    </div>
+</main>
+
+<!--<footer class="footer">
+    <div class="container text-center">
+        <span class="text-muted">Plataforma desenvolvida pelo Centro de Estudos da Metrópole.</span>
+    </div>
+</footer>-->
+
+<!-- Modal: About the project modal -->
+<div class="modal fade" id="aboutProjectModal" tabindex="-1" role="dialog" aria-labelledby="aboutProjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title text-center" style="width: 100%;" id="pageloadModalLabel">Sobre o Projeto</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="font-size: 15px; padding: 30px;">
+                <img style="display: block; margin-left: auto; margin-right: auto;" src="images/logo-cem-hd.png" height="120" />
+                <p>O <strong>DataCEM</strong> e o <strong>WikiDados</strong> são projetos do <strong><a href="http://web.fflch.usp.br/centrodametropole/">Centro de Estudos da Metrópole (CEM</a><a href="http://web.fflch.usp.br/centrodametropole/">)</a></strong>, um <strong><a href="http://cepid.fapesp.br/home/">Cepid</a></strong> financiado pela <a href="http://www.fapesp.br/"><strong>Fapesp</strong> </a>e sediado na Universidade de São Paulo e no<strong> <a href="http://cebrap.org.br/">Centro Brasileiro de Análise e Planejamento (Cebrap)</a></strong>. </span></p>
+                <p><strong>Coordenação e execução:</strong></p>
+                <p><strong>Marta Arretche</strong></p>
+                <p>Diretora do Centro de Estudos da Metrópole</p>
+                <p>Departamento de Ciência Política da USP</p>
+                <br>
+                <p><strong>Mariana Gianotti</strong></p>
+                <p>Professora da Escola Politécnica da USP</p>
+		<p>Coordenadora da Área de Transferência do CEM</p> 
+                <br>
+                <p><strong>Rogério Jerônimo Barbosa</strong></p>
+                <p>Doutor em Sociologia (USP)</span></p>
+                <p>Coordenador do Projeto</p>
+                <br>
+                <p><strong>André Ricardo Frederico</strong></p>
+                <p>Mestre em Ciência da Computação (UFABC)</p>
+                <br>
+                <p><strong>Clóvis K. Hanashiro</strong></p>
+                <p>Mestre em Engenharia da Computação (USP)</p>
+                <br>
+                <p><strong>Mariela Atausinchi Fernandes</strong></p>
+                <p>Mestre em Ciência da Computação (USP)</p>
+            </div>
+            <!--<div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>-->
+        </div>
+    </div>
+</div>
+<!-- End of About the project modal -->
+
+<!-- Modal: informações sobre uma variável -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fa fa-info-circle text-info fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;
+                <h5 class="modal-title" id="myModalLabel">Detalhes da variável {{codigoVariavel}} do Censo {{anoVariavel}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="tab-content" id="variablesInfoTabContent">
+                    <!-- <div role="tabpanel" class="tab-pane fade show active" id="descTab" aria-labelledby="desc-tab" style="margin-left:10px;height:200px;overflow-y:scroll"> -->
+                    <div role="tabpanel" class="tab-pane fade show active" id="descTab" aria-labelledby="desc-tab" style="overflow-y:scroll">
+                        <br>
+	                <!-- 14 municípios com áreas de ponderação redefinidas -->
+                        <!-- <p style="white-space:pre-wrap">{{textoDescricaoVar}}</p> -->
+                        <p style="white-space:pre-wrap;margin-left:10px">{{textoLabelVar}}</p>
+			<div ng-if="codigoVariavel == 'V0014' || codigoVariavel == 'V0015'">
+			       <div>
+                                 <br>
+                                 <p> Caixias do Sul </p>
+			         <p> Feira de Santana </p>
+				 <p> Imperatriz </p>
+				 <p> Maringá </p>
+				 <p> Natal </p>
+				 <p> Novo Hamburgo </p>
+				 <p> Pelotas </p>
+				 <p> Ponta Grossa </p>
+				 <p> Porto Alegre </p> 
+				 <p> Rio Grande </p>
+				 <p> Rio de Janeiro </p>
+				 <p> Salvador </p>
+				 <p> Santa Maria </p>
+				 <p> Viamão </p>
+                                 <br>
+ 			     </div>
+         	      </div>
+                    </div>
+                    <div style="overflow-y:scroll">
+                    <!-- <div role="tabpanel" class="tab-pane fade" id="catTab" aria-labelledby="cat-tab" style="margin-left:10px;height:200px;overflow-y:scroll"> -->
+                        <br>
+                        <p style="display:{{displayLoadMsg}}"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Carregando dados...</p>
+                        <p style="white-space:pre-wrap;margin-left:10px">{{textoCategoriaVar}}</p>
+                        <table id = "tabCategory" name="category[]"  class="table table-condensed {{categoryTableClass}}" ng-model="data.category">
+                            <tr>
+                                <th style="vertical-align:middle;width:10px"><h6 class="font-weight-bold">Categorias</h6></th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <th style="vertical-align:middle;width:10px">Valor</th>
+                                <th>Descrição</th>
+                            </tr>
+                            <tr ng-repeat="item in data.category">
+                                <td ng-repeat="(key,val) in item" style="vertical-align:middle;">{{val}}</td>
+                                <!-- <td style="vertical-align:middle;">{{item.label}}</td> -->
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div> <!-- div class="modal-body" -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div> <!-- div class="modal-content" -->
+    </div> <!-- div class="modal-dialog" -->
+</div> <!-- div class="modal fade" id="myModal" -->
+
+
+<!-- Modal: filtro -->
+<div class="modal fade" id="modalFilter" tabindex="-1" role="dialog" aria-labelledby="modalFilterLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fa fa-filter text-info fa-2x" aria-hidden="true"></i>&nbsp;&nbsp;
+                <h5 class="modal-title" id="modalFilterLabel">Filtro da variável {{codigoVariavel}} do Censo {{anoVariavel}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <div role="tabpanel" class="tab-pane fade show active" id="catFilterTab" aria-labelledby="cat-tab" style="margin-left:10px;height:210px;overflow-y:scroll">
+                    
+                    <p style="display:{{displayLoadMsg}}"><i class="fa fa-spin fa-spinner"></i>&nbsp;&nbsp;Carregando dados...</p>
+                    <p style="white-space:pre-wrap;display:">{{textoCategoriaVar}}</p>
+
+                    <!-- Div for Numeric field and their operations -->
+                    <div id="divNumericField" style="display:{{displayNumericField}}">
+                        <div class="card" style="width:98%">
+                            <div class="card-header card-header-title" style="padding: 3px 5px 3px 5px;"> Escolher operação: </div>
+                            <div class="card-body" style="padding: 3px 5px 3px 5px;">
+                                <div class="form-group" style="padding: 3px 0px 3px 0px; margin-bottom:0px">
+                                    <ul class="nav nav-pills nav-fill" style="font-weight:600; font-size:1.3em;">
+                                        <li class="nav-item" ng-model="filterOper" ng-click="filterChangeOper('>', false)">
+                                            <a ng-class="{'nav-link':true, 'active':filterOper=='>'}"  id="filterOperGreater" title="Maior que" style="max-width:100px"
+                                            value=">" href="#censo>"> > </a>
+                                        </li>
+                                        <li class="nav-item" ng-model="filterOper" ng-click="filterChangeOper('<', false)">
+                                            <a ng-class="{'nav-link':true, 'active':filterOper=='<'}"  id="filterOperLess" title="Menor que" style="max-width:100px"
+                                            value="<" href="#censo>"> < </a>
+                                        </li>
+                                        <li class="nav-item" ng-model="filterOper" ng-click="filterChangeOper('=', false)">
+                                            <a ng-class="{'nav-link':true, 'active':filterOper=='='}"  id="filterOperEqual" title="Igual a" style="max-width:100px"
+                                            value="=" href="#censo>"> = </a>
+                                        </li>
+                                        <li class="nav-item" ng-model="filterOper" ng-click="filterChangeOper('>=', false)">
+                                            <a ng-class="{'nav-link':true, 'active':filterOper=='>='}"  id="filterOperGreaterEqual" title="Maior ou igual a" style="max-width:100px"
+                                            value=">=" href="#censo>="> >= </a>
+                                        </li>
+                                        <li class="nav-item" ng-model="filterOper" ng-click="filterChangeOper('<=', false)">
+                                            <a ng-class="{'nav-link':true, 'active':filterOper=='<='}"  id="filterOperLessEqual" title="Menor ou igual a" style="max-width:100px"
+                                            value="<=" href="#censo>="> <= </a>
+                                        </li>
+                                        <li class="nav-item" ng-model="filterOper" ng-click="filterChangeOper('><', false)">
+                                            <a ng-class="{'nav-link':true, 'active':filterOper=='><'}"  id="filterOperBetween" title="Valores entre" style="max-width:100px"
+                                            value="><" href="#censo>=">Intervalo</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div> <!-- class="card-body" -->
+                        </div> <!-- class="card" -->
+                        <br>
+                        <div class="card" style="width:98%">
+                            <div class="card-header card-header-title" style="padding: 3px 5px 3px 5px;"> Filtrar por valores: </div>
+                            <div class="card-body" style="padding: 3px 5px 3px 5px;">
+                                <div style="float:left;align-items:center;display:flex;margin: 3px 0px 3px 0px;">
+                                    <div style="float:left;vertical-align:middle;text-align:center">{{filterText}}&nbsp;&nbsp;</div>
+                                    <input id='inputFilterValue1' type='text' ng-model="input1stValue" value='' class='form-control' placeholder={{placeHolder1stValue}} required style="float:left;width:150px">
+                                    <div style="align-items:center;display:{{displayInput2ndValue}}">
+                                        <div style="float:left;vertical-align:middle;text-align:center">&nbsp; e &nbsp;</div>
+                                        <input id='inputFilterValue2' type='text' ng-model="input2ndValue" value='' class='form-control' placeholder='Maior valor' required style="float:left;width:150px">
+                                    </div>
+                                </div>
+                            </div> <!-- class="card-body" -->
+                        </div> <!-- class="card" -->
+                    </div> <!-- id="divNumericField" -->
+
+                    <div id="divCategoryField" style="display:{{displayCategField}}">
+                        <!-- -->
+                        <div style="float:left;align-items:center;display:flex;padding-bottom:10px">
+                            <div style="float:left;vertical-align:middle;text-align:center">Busca:&nbsp;</div>
+                            <input id="inputFilterCategory" type="text" onkeyup="functionFilterCategory()" class='form-control' placeholder="procura por descrição..." style="float:left;width:300px">
+                        </div>
+                        <table id = "tabFilterCategory" class="table table-condensed {{categoryTableClass}}" ng-model="dataCat.category" style="width:98%">
+                            <tr style="background-color: skyblue">
+                                <th style="vertical-align:middle;text-align:center;width:5px">
+                                    <input type="checkbox" id="selectFilterAllCheckbox" ng-model="filterAllChecked" title="Selecionar ou desselecionar todos" ng-click="filterClickCBSelectAll(filterAllChecked)" style="display:{{displayCBSelectAll}}">
+                                    <i class="fa fa-minus-square" ng-click="filterClickCBSelectAll(!filterAllChecked)" style="display:{{displayAllCheckedIndeterminate}}"></i>
+                                </th>
+                                <th style="vertical-align:middle;width:10px">Valor</th>
+                                <th>Descrição</th>
+                            </tr>
+                            <tr ng-repeat="item in dataCat.category">
+                                <td style="vertical-align:middle;text-align:center">
+                                    <input type="checkbox" id="selectFilterCheckbox" ng-model="item.filterChecked" ng-click="filterClickCB ($index)">
+                                </td>
+                                <td ng-repeat="(key,val) in item" ng-if="$index < 2" style="vertical-align:middle;">{{val}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div> <!-- div class="modal-body" -->
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" ng-click="execFilter(this)" data-dismiss="{{resultFilterOK}}">Filtrar</button>
+            </div>
+        </div> <!-- div class="modal-content" -->
+    </div> <!-- div class="modal-dialog" -->
+</div> <!-- div class="modal fade" id="modalFilter" -->
+
+
+<!-- Modal: informações iniciais para o usuário mexer com o app -->
+<div class="modal show" id="pageloadModal" tabindex="-1" role="dialog" aria-labelledby="pageloadModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <!--<div class="modal-header">
+                <h3 class="modal-title" id="pageloadModalLabel">Bem vindo ao DataCEM: Censos Demográficos</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>-->
+            <div class="modal-body">
+
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+                        <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                         <div class="carousel-item active">
+                            <div class="modal-header modal-body-header">
+                                <h3 class="text-center">Instruções de uso - 1ª Tela</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <img class="d-block w-100" src="images/slides-modal-pageload/def-slide1.png"  alt="Sugestões e dúvidas">
+                            <div class="carousel-caption d-none d-sm-block alert carrousel-modal">
+                                <a href="http://200.144.244.241/foruns/" class="nav-link"  target="_blank" title="Forum de discussões sobre a plataforma de extração de dados censitários">
+                                    <i class="fa fa-2x fa-comments"></i> <h5>Visite e participe do nosso Fórum!</h5>
+                                </a>
+                            </div>
+                        </div>
+                         <div class="carousel-item">
+                            <div class="modal-header modal-body-header">
+                                <h3 class="text-center">Instruções de uso - 2ª Tela</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <img class="d-block w-100" src="images/slides-modal-pageload/def-slide2.png"  alt="Sugestões e dúvidas">
+                            <div class="carousel-caption d-none d-sm-block alert carrousel-modal">
+                                <a href="http://200.144.244.241/foruns/" class="nav-link"  target="_blank" title="Forum de discussões sobre a plataforma de extração de dados censitários">
+                                    <i class="fa fa-2x fa-comments"></i> <h5>Visite e participe do nosso Fórum!</h5>
+                                </a>
+                            </div>
+                        </div>
+                         <div class="carousel-item">
+                            <div class="modal-header modal-body-header">
+                                <h3 class="text-center">Instruções de uso - 3ª Tela</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <img class="d-block w-100" src="images/slides-modal-pageload/def-slide3.png"  alt="Sugestões e dúvidas">
+                            <div class="carousel-caption d-none d-sm-block alert carrousel-modal">
+                                <a href="http://200.144.244.241/foruns/" class="nav-link"  target="_blank" title="Forum de discussões sobre a plataforma de extração de dados censitários">
+                                    <i class="fa fa-2x fa-comments"></i> <h5>Visite e participe do nosso Fórum!</h5>
+                                </a>
+                            </div>
+                        </div>
+                         <div class="carousel-item">
+                            <div class="modal-header modal-body-header">
+                                <h3 class="text-center">Instruções de uso - 4ª Tela</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <img class="d-block w-100" src="images/slides-modal-pageload/def-slide4.png"  alt="Sugestões e dúvidas">
+                            <div class="carousel-caption d-none d-sm-block alert carrousel-modal">
+                                <a href="http://200.144.244.241/foruns/" class="nav-link"  target="_blank" title="Forum de discussões sobre a plataforma de extração de dados censitários">
+                                    <i class="fa fa-2x fa-comments"></i> <h5>Visite e participe do nosso Fórum!</h5>
+                                </a>
+                            </div>
+                        </div>
+                         <div class="carousel-item">
+                            <div class="modal-header modal-body-header">
+                                <h3 class="text-center">Tem sugestões ou dúvidas?</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <img class="d-block w-100" src="images/slides-modal-pageload/forum-blue.png"  alt="Sugestões e dúvidas">
+                            <div class="carousel-caption d-none d-sm-block alert carrousel-modal">
+                                <a href="http://200.144.244.241/foruns/" class="nav-link"  target="_blank" title="Forum de discussões sobre a plataforma de extração de dados censitários">
+                                    <i class="fa fa-2x fa-comments"></i> <h5>Visite e participe do nosso Fórum!</h5>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="modal-header modal-body-header">
+                                <h3 class="text-center">Tem sugestões ou quer saber sobre os censos?</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <img class="d-block w-100" src="images/slides-modal-pageload/wiki-blue.png"  alt="Wikipedia dos dados">
+                            <div class="carousel-caption d-none d-sm-block alert carrousel-modal">
+                                <a href="http://200.144.244.241/foruns/index.php/wiki" class="nav-link"  target="_blank" title="Wikipedia sobre o Censo">
+                                    <h5>Consulte o <i class="fa fa-2x fa-wikipedia-w" style="margin-right: -9px;"></i> ikiDados!</h5>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev carousel-control-link" style="top:70px; width: 25%; "  href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <!--<span class="carousel-control-prev-icon text-dark" aria-hidden="true"></span>-->
+                        <!--<span class="sr-only">Previous</span>-->
+                        <span class="carousel-indicators carousel-control-prev-icon" style="bottom: 20px;" aria-hidden="true"> </span>
+                        <span class="carousel-indicators navigator-controls">ANTERIOR</span>
+                    </a>
+                    <a class="carousel-control-next carousel-control-link" style="top:70px; width: 25%;" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-indicators carousel-control-next-icon "  style="bottom: 20px;" aria-hidden="true"></span>
+                        <span class="carousel-indicators navigator-controls"> PRÓXIMO</span>
+                    </a>
+                </div>
+            </div>
+            <!--<div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>-->
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

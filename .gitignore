@@ -1,0 +1,22 @@
+# Config
+psw.js
+
+# dependencies
+/node_modules
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Others sources
+/public/stylesheets/font-awesome-4.7.0
+/bakMongo
+14-censoapp-Filter.zip
+app.js.bak
+parametersTeste.js
+parameters.js.bak

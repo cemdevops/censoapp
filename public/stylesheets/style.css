@@ -1,0 +1,323 @@
+
+body {
+  /*padding: 50px;*/
+  font: 12px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+/* style.css */
+/** {
+    font-size: 12px;
+    line-height: 2;
+}*/
+
+.fixed-width {
+    width:900px;
+    margin: 10px;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.menssagem-block p {
+    padding: 8px;
+}
+
+.glyphicon {
+    pointer-events: all;
+}
+
+.option-selected {
+    font-style: italic;
+    color:gray;
+    display:none;
+}
+
+.table-show {
+    height:0px;
+    font-size:11px;
+}
+
+.table-hide {
+    height:0px;
+    font-size:11px;
+    visibility:hidden;
+}
+/* Clóvis - 20170630...
+
+.table > thead > tr > th{
+    border-right: 1px solid #ddd;
+    border-bottom:0;
+}
+
+.table > tbody > tr > td{
+    border-right: 1px solid #ddd;
+}
+
+.table > thead > tr > th:last-of-type {
+    border-right: 0px;
+}
+
+.table > tbody > tr > td:last-of-type {
+    border-right: 0px;
+}
+
+.panel-body {
+    padding: 0;
+}
+
+.panel-body > .table{margin-bottom:0px;}
+/* ...Clóvis - 20170630 */
+
+/* maf css*/
+.dropdown-menu {
+    font-size: small;
+}
+
+.bg-blue-dark {
+    background-color: #373c4f;
+}
+
+.bg-purple{
+    background-color: #563d7c;
+}
+
+.bg-blue-intense {
+    background-color: #2e60a8;
+}
+/*maf*/
+.bg-dark-green {
+    background-color: #00468E;/*21585f*/ /*#173e43*/
+    color: #ffffff; /*ffffff;*/
+}
+
+.text-dark-green {
+    color: #21585f; /*#173e43*/
+}
+
+.text-dark {
+    color: #373c4f; /*#173e43*/
+}
+
+.text-yellow {
+    color: #CD921C;
+}
+
+a {
+    color: #00468E;
+}
+
+a:hover {
+    color: #CD921C;
+}
+
+
+.link-background-dark {
+    color: #59ABFF;
+}
+
+/*maf*/
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #f5f5f5;
+}
+
+.container-height{
+
+}
+/* card header*/
+.card-header-title{
+    font-size: medium;
+}
+
+/* Buttons variáveis */
+.btn-tables-circle {
+    font-size: 2.5em;
+    height: 66px;
+    width: 66px;
+    border-radius: 33px;
+}
+
+.mdl-button--fab.mdl-button--colored {
+    background: rgb(255,64,129);
+    color: rgb(255,255,255);
+}
+
+.mdl-button.mdl-button--colored {
+    color: rgb(63,81,181);
+}
+
+.mdl-button--fab {
+    border-radius: 50%;
+    font-size: 24px;
+    height: 56px;
+    margin: auto;
+    min-width: 56px;
+    width: 56px;
+    padding: 0;
+    overflow: hidden;
+    background: rgba(158,158,158, 0.20);
+    box-shadow: 0 1px 1.5px 0 rgba(0, 0, 0, 0.12), 0 1px 1px 0 rgba(0, 0, 0, 0.24);
+    position: relative;
+    line-height: normal;
+}
+
+.mdl-button {
+    background: transparent;
+    border: none;
+    border-radius: 30px;
+    color: rgb(0,0,0);
+    display: block;
+    position: relative;
+    height: 60px;
+    min-width: 64px;
+    padding: 0 8px;
+    display: inline-block;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: 0;
+    overflow: hidden;
+    will-change: box-shadow, transform;
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    line-height: 36px;
+    vertical-align: middle;
+}
+
+a, .mdl-accordion, .mdl-button, .mdl-card, .mdl-checkbox, .mdl-dropdown-menu, .mdl-icon-toggle, .mdl-item, .mdl-radio, .mdl-slider, .mdl-switch, .mdl-tabs__tab {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+/* end Buttons variáveis */
+
+.check
+{
+    color: #fff; /*#996*/
+    background-color: #343a40;
+
+}
+
+.card {
+    border: 3px solid rgba(0,0,0,.125);
+}
+
+.bootbox .modal-dialog .modal-content .modal-header {
+    display: block;
+}
+
+/*carrousel*/
+.carousel-caption {
+    position: absolute;
+    right: 0%;
+    bottom: -15px;
+    left: 0%;
+    z-index: 10;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    color: #fff;
+    text-align: center;
+    background: rgba(55,60,79,0.8);
+}
+
+.carousel-caption a, a.carousel-control-link {
+    color: #59ABFF;
+}
+
+.carousel-caption a:hover, a.carousel-control-link:hover {
+    color: #CD921C;
+}
+
+
+.carrousel-text-alert {
+    right: 15%;
+    left: 15%;
+    color: #ffffff;
+    font-size: 14px;
+    background: rgba(55,60,79,0.8);
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    padding: 3.0rem 4.45rem;
+    text-align: center;
+}
+
+.navigator-controls {
+    bottom: 20px;
+    font-weight: 600;
+    opacity: 1;
+    font-size: 15px;
+}
+
+/*nav pills*/
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #ffffff;
+    background-color: #00468E;
+}
+
+/*brand*/
+.navbar-brand {
+    display: inline-block;
+    padding-top: 0rem;
+    padding-bottom: 0rem;
+    margin: -7px -15px;
+    font-size: 1.5rem;
+    line-height: inherit;
+    white-space: nowrap;
+}
+
+/*brand title*/
+#brand-title-vertical {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 600; font-size: 26px;
+}
+
+/*brand subtitle*/
+#brand-subtitle-vertical {
+    font-weight: normal;
+    font-size: 13px;
+    margin-bottom: 0rem;
+    color: rgba(255,255,255,1);
+}
+
+/*brand title*/
+#brand-title-horizontal {
+    margin-top: 10px;
+    opacity: 0.9;
+    font-weight: 600;
+    font-size: 26px;
+}
+
+/*brand subtitle*/
+#brand-subtitle-horizontal {
+    font-weight: normal;
+    font-size: 14px;
+    margin-bottom: 0.3rem;
+}
+
+#main-container {
+    margin-top:90px;
+}
+
+<!-- Arrows -->
+.carousel-control-top {
+    top: 70px!important;
+}
+
+.modal-body-header {
+    margin-bottom: 10px;
+}
+
+
+
+

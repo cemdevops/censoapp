@@ -1,0 +1,27 @@
+{
+  "name": "censoapp",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "async-waterfall": "^0.1.5",
+    "body-parser": "~1.17.1",
+    "connect-mongodb-session": "^1.4.0",
+    "console-stamp": "^0.2.5",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "ejs": "~2.5.6",
+    "express": "~4.15.2",
+    "express-session": "^1.15.6",
+    "monetdb": "^1.1.4",
+    "mongo-to-csv": "^1.0.1",
+    "mongoose": "^4.9.8",
+    "morgan": "~1.8.1",
+    "node-xls": "0.0.8",
+    "nodemailer": "^4.3.1",
+    "serve-favicon": "~2.4.2",
+    "uniqid": "^4.1.1"
+  }
+}
