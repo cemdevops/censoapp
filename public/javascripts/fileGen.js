@@ -16,7 +16,7 @@ var transporter = nodemailer.createTransport(
     "service": "gmail",
     "auth": {
       "user": "cem.devops@gmail.com",
-      "pass": "Cem#fflch"
+      "pass": "escsrfortqcqngio"
     }
   }
 );

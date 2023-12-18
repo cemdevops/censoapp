@@ -494,13 +494,13 @@ exports.getEmailHTMLBody = function (strUniqueID, objQryData) {
        // var strAux = objQryData[i].var[0].substring (0,5).toUpperCase();
        strManualLink += "  <br>" +
           "  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
-          " <a href='http://" + cfg.APP_IP + "/" + cfg.APP_CENSO_MANUAL_FILES_FOLDER + "Censo " + arrayAuxYear[i] + " - Documentação Complementar.zip'> Censo " + arrayAuxYear[i] + "(IBGE)</a>";
+          " <a href='https://" + cfg.FORUM_HOST + "/" + cfg.APP_CENSO_MANUAL_FILES_FOLDER + "Censo " + arrayAuxYear[i] + " - Documentação Complementar.zip'> Censo " + arrayAuxYear[i] + "(IBGE)</a>";
   }
 
 //   if (!bisHarm)
     strManualLink += "  <br>" +
       "  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
-      " <a href='http://" + cfg.APP_IP + "/" + cfg.APP_CENSO_MANUAL_FILES_FOLDER +  "Dicionário de Códigos - Variáveis Harmonizadas - Censos 1960-2010.xlsx'> Censos 1960-2010 Dicionário de Variáveis Harmonizadas(CEM) </a>";
+      " <a href='https://" + cfg.FORUM_HOST + "/" + cfg.APP_CENSO_MANUAL_FILES_FOLDER +  "Dicionário de Códigos - Variáveis Harmonizadas - Censos 1960-2010.xlsx'> Censos 1960-2010 Dicionário de Variáveis Harmonizadas(CEM) </a>";
 
   // var strAux = objQryData[i].var[0].substring (0,5).toUpperCase();
   // strManualLink += "  <br>" +
@@ -521,12 +521,12 @@ exports.getEmailHTMLBody = function (strUniqueID, objQryData) {
       "<p>Dados Extraídos(CEM):" +
       "  <br>" +
       "  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
-      " <a href='http://" + cfg.APP_IP + ":" + cfg.APP_PORT + "/files/download?file=" + strUniqueID + "&ty=0'>Arquivo de Dados</a>" +
+      " <a href='https://" + cfg.APP_HOST + "/files/download?file=" + strUniqueID + "&ty=0'>Arquivo de Dados</a>" +
       "  <br>" +
       "<p>Documentação(IBGE):" +
       "  <br>" +
       "  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
-      " <a href='http://" + cfg.APP_IP + ":" + cfg.APP_PORT + "/files/download?file=" + strUniqueID + "&ty=1'>Documentos Relacionados</a>" +
+      " <a href='https://" + cfg.APP_HOST + "/files/download?file=" + strUniqueID + "&ty=1'>Documentos Relacionados</a>" +
       "</p>" +
       strManualLink +
       "<p><u>Atenção</u>:&nbsp;<i>Os arquivos ficarão disponíveis por 24h</i></p>" +

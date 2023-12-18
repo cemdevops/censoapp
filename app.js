@@ -48,6 +48,7 @@ var store = new MongoDBStore({
   collection: 'mySessions'
 });
 // Catch errors
+console.log('mongo_uri', strURI);
 store.on('error', function(error) {
   assert.ifError(error);
   assert.ok(false);

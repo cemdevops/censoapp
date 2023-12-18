@@ -22,19 +22,21 @@ config.DB_INIC = "monet";
 config.DB_SERVER = "internuvem";
 //config.DB_SERVER = "local";
 
-config.APP_IP = "200.144.244.241";
-//config.APP_IP = "localhost";
+config.APP_IP = "200.144.244.241"; //host produção
+//config.APP_IP = "localhost"; //host
 config.APP_PORT = "3004";
+config.APP_HOST = "data.centrodametropole.fflch.usp.br";
+config.FORUM_HOST = "web.centrodametropole.fflch.usp.br";
 
-//config.MONGO_IP = "localhost";
+config.MONGO_IP = "localhost";
 //config.MONGO_IP = "172.16.1.94";
-config.MONGO_IP = "200.144.244.241";
+//config.MONGO_IP = "200.144.244.241";
 
 config.MONGO_PORT = "27017";
 
 config.MONGO_AUTH_DB = "admin";
 
-if (config.MONGO_IP == "200.144.244.241") {
+if (config.MONGO_IP == "localhost") {
     config.MONGO_APP_USR = "censoApp";
     config.MONGO_APP_W_USR = "censoAppW";
     config.MONGO_APP_PASSWD = ":" + cfg.MONGO_APP_PASSWD;
